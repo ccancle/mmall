@@ -151,4 +151,38 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="checkUsername" resultType="int" parameterType="string">
+    select count(1) from mmall_user
+    where username = #{username}
+  </select>
+
+  <select id="checkEmail" resultType="int" parameterType="string">
+    select count(1) from mmall_user
+    where email = #{email}
+  </select>
+
+  <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
+    -- 避免使用select * 语句进行查询 查找什么就单独写什么 方便之后项目迭代过程中不必要的改错
+    select
+    <include refid="Base_Column_List"/>
+    where username = #{username}
+    and password = #{password}
+  </select>
+
+  <select id="selectQuestionByUsername" resultType="string" parameterType="string">
+    select
+    question
+    from mmall_user
+    where username = #{username}
+  </select>
+
+  <select id="checkAnswer" resultType="int" parameterType="map">
+    select
+    count(1)
+    from mmall_user
+    where username = #{username}
+    and question = #{question}
+    and answer = #{answer}
+  </select>
 </mapper>
